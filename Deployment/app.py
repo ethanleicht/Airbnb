@@ -144,6 +144,54 @@ with col2:
             greet, pool, beach, patio, luggage, furniture,
             gender, 0.9643, 0.9029, 0.9650, no_review)))
         
+        # Define the current feature names
+        current_feature_names = ['description', 'host_since', 'host_response_time', 'host_response_rate',
+            'host_acceptance_rate', 'host_is_superhost', 'host_listings_count', 'host_has_profile_pic', 
+            'host_identity_verified', 'room_type', 'accommodates', 'bathrooms', 'bedrooms', 'beds', 
+            'minimum_nights', 'maximum_nights', 'minimum_nights_avg_ntm', 'maximum_nights_avg_ntm', 
+            'has_availability', 'availability_30', 'availability_90', 'availability_365', 'number_of_reviews', 
+            'number_of_reviews_ltm', 'number_of_reviews_l30d', 'first_review', 'last_review', 
+            'review_scores_rating', 'review_scores_accuracy', 'review_scores_cleanliness', 
+            'review_scores_checkin', 'review_scores_communication', 'review_scores_location', 
+            'review_scores_value', 'instant_bookable', 'calculated_host_listings_count', 
+            'calculated_entire', 'calculated_private', 'calculated_shared', 'neighborhood', 
+            'neighborhood_group', 'inactive', 'reviews_month', 'responds', 'geo_x', 'geo_y', 'geo_z', 
+            'property', 'tv', 'netflix', 'gym', 'elevator', 'fridge', 'heating', 'hair_dryer', 
+            'air_conditioning', 'hot_tub', 'oven', 'bbq', 'security cameras', 'workspace', 'coffee', 
+            'backyard', 'outdoor_dining', 'greets', 'pool', 'beachfront', 'patio', 'luggage', 'furniture', 
+            'nlp_gender', 'sent_median', 'sent_mean', 'sent_mode', 'no_review']
+
+        # Desired feature order
+        desired_order = ['neighborhood_group', 'number_of_reviews', 'minimum_nights', 'beds', 'calculated_entire',
+            'host_response_rate', 'number_of_reviews_l30d', 'host_is_superhost', 'heating', 'bedrooms', 
+            'review_scores_accuracy', 'property', 'review_scores_communication', 'host_response_time', 'geo_x', 
+            'number_of_reviews_ltm', 'room_type', 'host_has_profile_pic', 'tv', 'fridge', 'outdoor_dining', 
+            'sent_mode', 'geo_z', 'coffee', 'bathrooms', 'availability_90', 'security cameras', 'inactive', 
+            'maximum_nights_avg_ntm', 'last_review', 'minimum_nights_avg_ntm', 'greets', 'sent_median', 'responds', 
+            'host_listings_count', 'patio', 'availability_30', 'calculated_shared', 'review_scores_rating', 
+            'first_review', 'review_scores_location', 'reviews_month', 'review_scores_checkin', 'instant_bookable', 
+            'host_since', 'hot_tub', 'bbq', 'netflix', 'workspace', 'description', 'pool', 'beachfront', 
+            'luggage', 'nlp_gender', 'no_review', 'geo_y', 'backyard', 'review_scores_value', 'elevator', 
+            'accommodates', 'review_scores_cleanliness', 'air_conditioning', 'availability_365', 'sent_mean', 
+            'host_identity_verified', 'host_acceptance_rate', 'calculated_host_listings_count', 'neighborhood', 
+            'hair_dryer', 'gym', 'oven', 'furniture', 'calculated_private', 'maximum_nights', 'has_availability']
+
+        # Create the test input array (example data)
+        data = np.column_stack((
+            dec, 2049.8854, response, 76.6324, 71.2640, super_host, 69.1362, pic, verified, room_type, 
+            accommodates, bathrooms, bedrooms, beds, min_nights, 601.9025, 27.1608, 332469.8321, 
+            availability, 9.7215, 40.2549, 179.5286, 36.1675, 9.8272, 0.9183, 827.2542, 238.0988, 4.6789, 
+            accuracy, clean, checkin, communication, location, value, instant, 18.3119, 14.5421, 3.3295, 
+            0.3858, 0, 114, 0, 1.1963, 1, -0.3559, -0.7283, 0.5242, 17, tv, netflix, gym, elevator, 
+            fridge, heat, hair, air, tub, oven, bbq, cams, workspace, coffee, backyard, outdoor, greet, 
+            pool, beach, patio, luggage, furniture, gender, 0.9643, 0.9029, 0.9650, no_review))
+
+        # Create DataFrame
+        X_test = pd.DataFrame(data=data, columns=current_feature_names)
+
+        # Reorder the DataFrame columns to match the desired order
+        X_test_reordered = X_test[desired_order]
+        
         st.info(f"Predicted price is ${round(exp(xgb_model.predict(X_test)), 2)}")
  
 st.markdown('---')
